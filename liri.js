@@ -44,6 +44,7 @@ function bandSearch(parameter) {
     console.log(artist);
   } else {
     artist = parameter;
+    // console.log(artist);
   }
   // create variable for queryURL for bandsInTown
   var queryURL = "https://rest.bandsintown.com/artists/" + artist + "/events?app_id=codingbootcamp";
@@ -52,8 +53,8 @@ function bandSearch(parameter) {
   // run a request with axios to bandsInTown 
   axios.get(queryURL).then(
     function (response) {
-      // create variable to store stringified response 
-      var data = JSON.stringify(response);
+      // create variable to store parsed response 
+      var data = JSON.parse(response);
         // get venue name
         console.log("Venue: " + data[i].venue.name);
         // get venue location
@@ -63,9 +64,12 @@ function bandSearch(parameter) {
         date = moment(date).format("MM/DD/YYYY");
         console.log("Date: " + date);
     }
-  );
+  )
+  .catch(function(err) {
+    console.log(err);
+  });
 };
 
 whichAction();
 
-// ERRORS WITH CODE: RUNS CONSOLE LOG ON LINE 51 BUT THEN ERROR OCCURS IN AXIOS CALL. TYPE ERROR: CONVERTING CIRCULAR STRUCTURE TO JSON
+// ERRORS WITH CODE: RUNS CONSOLE LOG ON LINE 51 BUT THEN ERROR OCCURS IN AXIOS CALL. SyntaxError: Unexpected token o in JSON at position 1
