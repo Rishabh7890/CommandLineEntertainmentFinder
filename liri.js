@@ -55,6 +55,8 @@ function bandSearch(parameter) {
     function (response) {
       // create variable to store parsed response 
       var data = JSON.parse(response);
+      // loop through array to get venue information for each event
+      for (var i = 0; i < data.length; i++) {
         // get venue name
         console.log("Venue: " + data[i].venue.name);
         // get venue location
@@ -63,6 +65,7 @@ function bandSearch(parameter) {
         var date = data[i].datetime;
         date = moment(date).format("MM/DD/YYYY");
         console.log("Date: " + date);
+      };
     }
   )
   .catch(function(err) {
