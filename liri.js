@@ -54,15 +54,15 @@ function bandSearch(parameter) {
   axios.get(queryURL).then(
     function (response) {
       // create variable to store parsed response 
-      var data = JSON.parse(response);
+      // var data = JSON.parse(response);
       // loop through array to get venue information for each event
-      for (var i = 0; i < data.length; i++) {
+      for (var i = 0; i < response.length; i++) {
         // get venue name
-        console.log("Venue: " + data[i].venue.name);
+        console.log("Venue: " + response[i].venue.name);
         // get venue location
-        console.log("Location: " + data[i].venue.city);
+        console.log("Location: " + response[i].venue.city);
         // get date of show and convert using moment
-        var date = data[i].datetime;
+        var date = response[i].datetime;
         date = moment(date).format("MM/DD/YYYY");
         console.log("Date: " + date);
       };
@@ -75,4 +75,4 @@ function bandSearch(parameter) {
 
 whichAction();
 
-// ERRORS WITH CODE: RUNS CONSOLE LOG ON LINE 51 BUT THEN ERROR OCCURS IN AXIOS CALL. SyntaxError: Unexpected token o in JSON at position 1
+// ERRORS WITH CODE: RUNS CONSOLE LOG ON LINE 51 BUT THEN ERROR OCCURS IN AXIOS CALL. NONE OF THE CONSOLES LOG WITHIN AXIOS SHOW COMMENTED OUT LINE 57 AND CHANGED ALL data[i] to response [i]. 
