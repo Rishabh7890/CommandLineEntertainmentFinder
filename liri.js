@@ -59,7 +59,7 @@ function bandSearch(parameter) {
   // run a request with axios to bandsInTown
   axios
     .get(queryURL)
-    .then(function(response) {
+    .then(function (response) {
       // loop through array to get venue information for each event
       // console.log(response);
       for (var i = 0; i < response.data.length; i++) {
@@ -75,7 +75,7 @@ function bandSearch(parameter) {
       }
     })
     // provide catch statement for the error
-    .catch(function(err) {
+    .catch(function (err) {
       console.log(err);
     });
 }
@@ -96,12 +96,11 @@ function songInfo(parameter) {
     console.log(song);
   }
   // use the search method from spotify module to search for song
-  spotify.search(
-    {
+  spotify.search({
       type: "track",
       query: song
     },
-    function(err, data) {
+    function (err, data) {
       if (err) {
         console.log("Error: " + err);
         return;
@@ -117,8 +116,8 @@ function songInfo(parameter) {
     }
   );
 }
-
-function movieInfo (parameter) {
+// create a function to run if action === movie-this
+function movieInfo(parameter) {
   if (action === "movie-this") {
     var movie = "";
     for (var i = 3; i < process.argv.length; i++) {
@@ -129,7 +128,7 @@ function movieInfo (parameter) {
   } else {
     movie = parameter;
   }
-
+  // if no parameter is given, default give info about Mr. Nobody
   if (parameter === undefined) {
     movie = "Mr. Nobody";
     console.log(movie);
@@ -137,14 +136,11 @@ function movieInfo (parameter) {
   }
 
   var queryURL = "https://www.omdbapi.com/?t=" + movie + "&y=&plot=short&apikey=trilogy";
-
+  // axios call to get info from omdb api
   axios
     .get(queryURL)
-    .then(function(response) {
-      // loop through array to get venue information for each event
-      // console.log(response);
-      // console.log(queryURL);
-      
+    .then(function (response) {
+      // console log all info from response 
       console.log("Title: " + response.data.Title);
       console.log("Release Year: " + response.data.Year);
       console.log("IMDB Rating: " + response.data.imdbRating);
@@ -155,21 +151,21 @@ function movieInfo (parameter) {
       console.log("Starring: " + response.data.Actors);
     })
     // provide catch statement for the error
-    .catch(function(err) {
+    .catch(function (err) {
       console.log(err);
     });
 }
-
+// create a function to run if action === do-what-it-says
 function iWantItThatWay() {
   if (action === "do-what-it-says") {
-    
-    fs.readFile("random.txt", "utf8", function(err, data) {
+
+    // read the file random.txt
+    fs.readFile("random.txt", "utf8", function (err, data) {
       if (err) {
         return console.log(err);
       }
-
+      //create array for data in random.txt file
       var dataArr = data.split(",");
-
       if (dataArr[0] === "spotify-this-song") {
         var song = dataArr[1].trim().slice(1, -1);
         songInfo(song);
@@ -180,5 +176,3 @@ function iWantItThatWay() {
 }
 
 whichAction();
-
-//Fixed axios call for bands in town.
