@@ -56,13 +56,14 @@ function bandSearch(parameter) {
       // create variable to store parsed response 
       // var data = JSON.parse(response);
       // loop through array to get venue information for each event
-      for (var i = 0; i < response.length; i++) {
+      // console.log(response);
+      for (var i = 0; i < response.data.length; i++) {
         // get venue name
-        console.log("Venue: " + response[i].venue.name);
+        console.log("Venue: " + response.data[i].venue.name);
         // get venue location
-        console.log("Location: " + response[i].venue.city);
+        console.log("Location: " + response.data[i].venue.city);
         // get date of show and convert using moment
-        var date = response[i].datetime;
+        var date = response.data[i].datetime;
         date = moment(date).format("MM/DD/YYYY");
         console.log("Date: " + date);
       };
@@ -75,4 +76,4 @@ function bandSearch(parameter) {
 
 whichAction();
 
-// ERRORS WITH CODE: RUNS CONSOLE LOG ON LINE 51 BUT THEN ERROR OCCURS IN AXIOS CALL. NONE OF THE CONSOLES LOG WITHIN AXIOS SHOW COMMENTED OUT LINE 57 AND CHANGED ALL data[i] to response [i]. 
+//Fixed axios call for bands in town.
