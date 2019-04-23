@@ -50,6 +50,7 @@ function bandSearch(parameter) {
   var queryURL = "https://rest.bandsintown.com/artists/" + artist + "/events?app_id=codingbootcamp";
   // console log queryURL
   console.log(queryURL);
+  console.log("-------------------------");
   // run a request with axios to bandsInTown 
   axios.get(queryURL).then(
     function (response) {
@@ -74,6 +75,41 @@ function bandSearch(parameter) {
     console.log(err);
   });
 };
+
+function songInfo(parameter) {
+  if(action === "spotify-this-song") {
+    var song = "";
+    for(var i = 3; i < process.argv.length; i++) {
+      song += process.argv[i];
+    }
+    console.log(song);
+  }
+  else {
+    song = parameter;
+  }
+  if(parameter === undefined) {
+    song = "The Sign ace of base";
+    console.log(song);
+  }
+
+  spotify.search({
+    type: "track",
+    query: song
+  }, function(err, data) {
+    if(err) {
+      console.log("Error: " + err);
+      return;
+    }
+    else {
+      console.log("-------------------------");
+      console.log("Artist: " + data.tracks.items[0].artists[0].name);
+      console.log("Song: " + data.tracks.items[0].name);
+      console.log("Preview: " + data.tracks.items[3].preview_url);
+      console.log("Album: " + data.tracks.items[0].album.name);
+      console.log("-------------------------");
+    }
+  })
+}
 
 whichAction();
 
