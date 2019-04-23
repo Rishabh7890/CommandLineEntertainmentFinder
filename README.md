@@ -10,4 +10,4 @@ LIRI is a command line node application that takes in parameters and gives you b
 
 ## concert-this:
 
-![Screen shot](images/concert-this-image.PNG)
+![Screen shot](images/concert-this-image.png)
