@@ -125,6 +125,7 @@ function movieInfo (parameter) {
       movie += process.argv[i];
     }
     console.log(movie);
+    console.log("-------------------------");
   } else {
     movie = parameter;
   }
@@ -132,6 +133,7 @@ function movieInfo (parameter) {
   if (parameter === undefined) {
     movie = "Mr. Nobody";
     console.log(movie);
+    console.log("-------------------------");
   }
 
   var queryURL = "https://www.omdbapi.com/?t=" + movie + "&y=&plot=short&apikey=trilogy";
@@ -141,7 +143,7 @@ function movieInfo (parameter) {
     .then(function(response) {
       // loop through array to get venue information for each event
       // console.log(response);
-      console.log(queryURL);
+      // console.log(queryURL);
       
       console.log("Title: " + response.data.Title);
       console.log("Release Year: " + response.data.Year);
@@ -156,6 +158,25 @@ function movieInfo (parameter) {
     .catch(function(err) {
       console.log(err);
     });
+}
+
+function iWantItThatWay() {
+  if (action === "do-what-it-says") {
+    
+    fs.readFile("random.txt", "utf8", function(err, data) {
+      if (err) {
+        return console.log(err);
+      }
+
+      var dataArr = data.split(",");
+
+      if (dataArr[0] === "spotify-this-song") {
+        var song = dataArr[1].trim().slice(1, -1);
+        songInfo(song);
+      }
+
+    })
+  }
 }
 
 whichAction();
