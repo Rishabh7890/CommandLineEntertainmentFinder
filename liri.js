@@ -66,6 +66,7 @@ function bandSearch(parameter) {
         var date = response.data[i].datetime;
         date = moment(date).format("MM/DD/YYYY");
         console.log("Date: " + date);
+        console.log("-------------------------");
       };
     }
   )
