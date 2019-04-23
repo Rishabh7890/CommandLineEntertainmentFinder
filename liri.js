@@ -10,7 +10,7 @@ var spotify = new Spotify(keys.spotify);
 // take in two args
 var action = process.argv[2];
 var parameter = process.argv[3];
-// create a function with switch/case inside to decide which function will be run 
+// create a function with switch/case inside to decide which function will be run
 function whichAction() {
   switch (action) {
     case "concert-this":
@@ -30,10 +30,12 @@ function whichAction() {
       break;
 
     default:
-      console.log("Command Not Found! Please choose from the following options: concert-this, spotify-this-song, movie-this, do-what-it-says");
+      console.log(
+        "Command Not Found! Please choose from the following options: concert-this, spotify-this-song, movie-this, do-what-it-says"
+      );
       break;
   }
-};
+}
 // create a function to run if action === concert-this
 function bandSearch(parameter) {
   if (action === "concert-this") {
@@ -47,15 +49,17 @@ function bandSearch(parameter) {
     // console.log(artist);
   }
   // create variable for queryURL for bandsInTown
-  var queryURL = "https://rest.bandsintown.com/artists/" + artist + "/events?app_id=codingbootcamp";
+  var queryURL =
+    "https://rest.bandsintown.com/artists/" +
+    artist +
+    "/events?app_id=codingbootcamp";
   // console log queryURL
   console.log(queryURL);
   console.log("-------------------------");
-  // run a request with axios to bandsInTown 
-  axios.get(queryURL).then(
-    function (response) {
-      // create variable to store parsed response 
-      // var data = JSON.parse(response);
+  // run a request with axios to bandsInTown
+  axios
+    .get(queryURL)
+    .then(function(response) {
       // loop through array to get venue information for each event
       // console.log(response);
       for (var i = 0; i < response.data.length; i++) {
@@ -68,47 +72,90 @@ function bandSearch(parameter) {
         date = moment(date).format("MM/DD/YYYY");
         console.log("Date: " + date);
         console.log("-------------------------");
-      };
-    }
-  )
-  .catch(function(err) {
-    console.log(err);
-  });
-};
-
+      }
+    })
+    // provide catch statement for the error
+    .catch(function(err) {
+      console.log(err);
+    });
+}
+// create a function to run if action === spotify-this-song
 function songInfo(parameter) {
-  if(action === "spotify-this-song") {
+  if (action === "spotify-this-song") {
     var song = "";
-    for(var i = 3; i < process.argv.length; i++) {
+    for (var i = 3; i < process.argv.length; i++) {
       song += process.argv[i];
     }
     console.log(song);
-  }
-  else {
+  } else {
     song = parameter;
   }
-  if(parameter === undefined) {
+  // if a song is not specified give info about "The Sign ace of base" by default
+  if (parameter === undefined) {
     song = "The Sign ace of base";
     console.log(song);
   }
+  // use the search method from spotify module to search for song
+  spotify.search(
+    {
+      type: "track",
+      query: song
+    },
+    function(err, data) {
+      if (err) {
+        console.log("Error: " + err);
+        return;
+      } else {
+        // console log all song data
+        console.log("-------------------------");
+        console.log("Artist: " + data.tracks.items[0].artists[0].name);
+        console.log("Song: " + data.tracks.items[0].name);
+        console.log("Preview: " + data.tracks.items[3].preview_url);
+        console.log("Album: " + data.tracks.items[0].album.name);
+        console.log("-------------------------");
+      }
+    }
+  );
+}
 
-  spotify.search({
-    type: "track",
-    query: song
-  }, function(err, data) {
-    if(err) {
-      console.log("Error: " + err);
-      return;
+function movieInfo (parameter) {
+  if (action === "movie-this") {
+    var movie = "";
+    for (var i = 3; i < process.argv.length; i++) {
+      movie += process.argv[i];
     }
-    else {
-      console.log("-------------------------");
-      console.log("Artist: " + data.tracks.items[0].artists[0].name);
-      console.log("Song: " + data.tracks.items[0].name);
-      console.log("Preview: " + data.tracks.items[3].preview_url);
-      console.log("Album: " + data.tracks.items[0].album.name);
-      console.log("-------------------------");
-    }
-  })
+    console.log(movie);
+  } else {
+    movie = parameter;
+  }
+
+  if (parameter === undefined) {
+    movie = "Mr. Nobody";
+    console.log(movie);
+  }
+
+  var queryURL = "https://www.omdbapi.com/?t=" + movie + "&y=&plot=short&apikey=trilogy";
+
+  axios
+    .get(queryURL)
+    .then(function(response) {
+      // loop through array to get venue information for each event
+      // console.log(response);
+      console.log(queryURL);
+      
+      console.log("Title: " + response.data.Title);
+      console.log("Release Year: " + response.data.Year);
+      console.log("IMDB Rating: " + response.data.imdbRating);
+      console.log("Rotten Tomatoes Rating: " + response.data.Ratings[1].Value);
+      console.log("Country Produced: " + response.data.Country);
+      console.log("Language(s): " + response.data.Language);
+      console.log("Brief Plot: " + response.data.Plot);
+      console.log("Starring: " + response.data.Actors);
+    })
+    // provide catch statement for the error
+    .catch(function(err) {
+      console.log(err);
+    });
 }
 
 whichAction();
