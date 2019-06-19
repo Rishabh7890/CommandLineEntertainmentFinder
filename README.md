@@ -1,7 +1,7 @@
-# LIRI BOT APPLICATION (A Language Interpretation and Recognition Interface)
+# Command Line Entertainment Finder 
 
 ## Description
-LIRI is a command line node application that takes in parameters and gives you back information based on those parameters. The parameters are as following: 
+Command Line Entertainment Finder is a command line node application that takes in parameters and gives you back information based on those parameters. The parameters are as following: 
 
 -	concert-this
 -	Spotify-this-song
@@ -47,7 +47,7 @@ This will search the OMDB API and output the following information about the mov
 
 ![Screen shot](images/do-what-it-says-image.png)
 
-LIRI will use the text from “random.txt” and call on one of LIRI’s commands. 
+The App will use the text from “random.txt” and call on one of LIRI’s commands. 
 It should run Spotify-this-song for “I want it That way”. 
 
 ## APIs and Technologies used:
